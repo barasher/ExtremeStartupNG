@@ -1,0 +1,9 @@
+esng:
+  questionInterval: 12
+  questions:
+    -
+      family: "f1"
+      level: 2
+    -
+      family: "f2"
+
