@@ -3,6 +3,7 @@ package com.barasher.esng.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -20,6 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.barasher.esng.MetricManager;
 import com.barasher.esng.question.QuestionContext;
 import com.barasher.esng.question.QuestionFactory;
+import com.google.common.base.Preconditions;
 
 public class Game {
 
@@ -94,12 +96,12 @@ public class Game {
 		}
 	}
 
-	public void setLevel(int aLevel) {
-		if (aLevel < 1) {
-			throw new IllegalArgumentException("Level can't be lower than 1 (" + aLevel + " provided)");
-		}
-		LOG.info("Changing level to level {}", aLevel);
-		_currentLevel = aLevel;
+	public void setLevel(Optional<Integer> aLevel) {
+		Preconditions.checkNotNull(aLevel, "Level optional can't be null");
+		final int lvl = aLevel.orElse(getCurrentLevel() + 1);
+		Preconditions.checkArgument(lvl >= 1, "Level can't be lower than 1 (" + aLevel + " provided)");
+		LOG.info("Changing level to level {}", lvl);
+		_currentLevel = lvl;
 		getMetricManager().specifyLevel(_currentLevel);
 	}
 

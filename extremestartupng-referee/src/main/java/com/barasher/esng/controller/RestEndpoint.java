@@ -1,5 +1,6 @@
 package com.barasher.esng.controller;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,8 @@ public class RestEndpoint {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/changeLevel", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChangeLevelResponse changeLevel(
-			@RequestParam(value = "level", required = true) Integer aLevel) {
-		final int lvl = aLevel != null ? aLevel : getGame().getCurrentLevel() + 1;
-		getGame().setLevel(lvl);
+			@RequestParam(value = "level", required = false) Integer aLevel) {
+		getGame().setLevel(Optional.ofNullable(aLevel));
 		return new ChangeLevelResponse(getGame());
 	}
 
