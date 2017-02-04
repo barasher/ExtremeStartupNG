@@ -18,53 +18,59 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.client.RestTemplate;
 
 import com.barasher.esng.Context;
+import com.barasher.esng.configuration.EsngConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {
-	com.barasher.esng.model.GameTest.TestContext.class })
+		com.barasher.esng.model.GameTest.TestContext.class })
 public class GameTest {
 
-    @Configuration
-    static class TestContext extends Context {
+	@Configuration
+	static class TestContext extends Context {
 
-	@Bean
-	public CounterService getCounterService() {
-	    return Mockito.mock(CounterService.class);
+		@Bean
+		public CounterService getCounterService() {
+			return Mockito.mock(CounterService.class);
+		}
+
+		@Bean
+		public GaugeService getGaugeService() {
+			return Mockito.mock(GaugeService.class);
+		}
+
+		@Override
+		@Bean
+		public RestTemplate getRestTemplate() {
+			return Mockito.mock(RestTemplate.class);
+		}
+
+		@Bean
+		public EsngConfiguration getConfiguration() {
+			return new EsngConfiguration();
+		}
+
 	}
 
-	@Bean
-	public GaugeService getGaugeService() {
-	    return Mockito.mock(GaugeService.class);
+	@Autowired
+	private Game _game;
+
+	@Test
+	public void testAddPlayer() {
+		assertNotNull(_game.getPlayers());
+		assertTrue(_game.getPlayers().isEmpty());
+		final Player p = _game.addPlayer("n", "h", 42);
+		assertTrue(_game.getPlayers().contains(p));
 	}
 
-	@Override
-	@Bean
-	public RestTemplate getRestTemplate() {
-	    return Mockito.mock(RestTemplate.class);
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidLevelChange() {
+		_game.setLevel(-20);
 	}
 
-    }
-
-    @Autowired
-    private Game _game;
-
-    @Test
-    public void testAddPlayer() {
-	assertNotNull(_game.getPlayers());
-	assertTrue(_game.getPlayers().isEmpty());
-	final Player p = _game.addPlayer("n", "h", 42);
-	assertTrue(_game.getPlayers().contains(p));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvalidLevelChange() {
-	_game.setLevel(-20);
-    }
-
-    @Test
-    public void testLevelChange() {
-	_game.setLevel(2);
-	assertEquals(2, _game.getCurrentLevel());
-    }
+	@Test
+	public void testLevelChange() {
+		_game.setLevel(2);
+		assertEquals(2, _game.getCurrentLevel());
+	}
 
 }

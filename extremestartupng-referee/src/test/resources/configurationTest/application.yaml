@@ -1,3 +1,5 @@
+server:
+  port: 8081
 esng:
   questionInterval: 12
   questions:

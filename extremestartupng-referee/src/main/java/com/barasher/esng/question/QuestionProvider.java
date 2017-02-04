@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface QuestionProvider {
 
-    public String family();
+	public String family();
 
-    public int level();
+	public int level();
 
 }

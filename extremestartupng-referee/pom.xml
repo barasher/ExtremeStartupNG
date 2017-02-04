@@ -48,7 +48,6 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -60,7 +59,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.3.5.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -76,7 +74,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -85,7 +82,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
 				<configuration>
 					<argLine>-Dlogback.configurationFile=./src/test/resources/logback.xml</argLine>
 				</configuration>
@@ -107,7 +103,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
@@ -138,7 +133,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/tgz/lib</outputDirectory>
+							<outputDirectory>${project.build.directory}/tgz</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
@@ -154,7 +149,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
+<!-- 							<classpathPrefix>lib/</classpathPrefix> -->
 							<mainClass>com.barasher.esng.Main</mainClass>
 						</manifest>
 						<manifestEntries>
@@ -163,6 +158,9 @@
 					</archive>
 				</configuration>
 			</plugin>
+
+
+
 		</plugins>
 	</build>
 

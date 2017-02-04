@@ -23,84 +23,84 @@ import com.barasher.esng.question.QuestionFactory;
 
 public class Game {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Game.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Game.class);
 
-    @Autowired
-    private QuestionFactory _questionFactory;
-    @Autowired
-    private MetricManager _metrics;
-    @Autowired
-    private ApplicationContext _context;
+	@Autowired
+	private QuestionFactory _questionFactory;
+	@Autowired
+	private MetricManager _metrics;
+	@Autowired
+	private ApplicationContext _context;
 
-    private int _currentLevel;
-    private final Set<Player> _players = new HashSet<>();
+	private int _currentLevel;
+	private final Set<Player> _players = new HashSet<>();
 
-    public Game() {
-	_currentLevel = 1;
-    }
-
-    @PostConstruct
-    public void init() {
-	_metrics.specifyLevel(getCurrentLevel());
-    }
-
-    public int getCurrentLevel() {
-	return _currentLevel;
-    }
-
-    public Set<Player> getPlayers() {
-	return _players;
-    }
-
-    MetricManager getMetricManager() {
-	return _metrics;
-    }
-
-    QuestionFactory getQuestionFactory() {
-	return _questionFactory;
-    }
-
-    public Player addPlayer(String aNickname, String aHost, int aPort) {
-	final Player p = _context.getBean(Player.class);
-	p.setNickname(aNickname);
-	p.setUri(aHost, aPort);
-	_players.add(p);
-	return p;
-    }
-
-    @Scheduled(fixedDelay = 5000)
-    public void askQuestions() {
-	getMetricManager().notifyNewQuestion();
-
-	// Generating question
-	final QuestionContext qc = getQuestionFactory().build(getCurrentLevel());
-	LOG.info("New question : {}", qc.getQuestion());
-
-	// Thread exécution
-	final List<CompletableFuture<Void>> futures = new ArrayList<>();
-	for (final Player curPlayer : _players) {
-	    futures.add(CompletableFuture.runAsync(() -> curPlayer.ask(qc)));
+	public Game() {
+		_currentLevel = 1;
 	}
 
-	// Waiting for response
-	for (final CompletableFuture<Void> curFuture : futures) {
-	    try {
-		curFuture.get(1000, TimeUnit.SECONDS);
-	    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-		if (!curFuture.isDone()) {
-		    curFuture.cancel(true);
+	@PostConstruct
+	public void init() {
+		_metrics.specifyLevel(getCurrentLevel());
+	}
+
+	public int getCurrentLevel() {
+		return _currentLevel;
+	}
+
+	public Set<Player> getPlayers() {
+		return _players;
+	}
+
+	MetricManager getMetricManager() {
+		return _metrics;
+	}
+
+	QuestionFactory getQuestionFactory() {
+		return _questionFactory;
+	}
+
+	public Player addPlayer(String aNickname, String aHost, int aPort) {
+		final Player p = _context.getBean(Player.class);
+		p.setNickname(aNickname);
+		p.setUri(aHost, aPort);
+		_players.add(p);
+		return p;
+	}
+
+	@Scheduled(fixedDelay = 5000)
+	public void askQuestions() {
+		getMetricManager().notifyNewQuestion();
+
+		// Generating question
+		final QuestionContext qc = getQuestionFactory().build(getCurrentLevel());
+		LOG.info("New question : {}", qc.getQuestion());
+
+		// Thread exécution
+		final List<CompletableFuture<Void>> futures = new ArrayList<>();
+		for (final Player curPlayer : _players) {
+			futures.add(CompletableFuture.runAsync(() -> curPlayer.ask(qc)));
 		}
-	    }
-	}
-    }
 
-    public void setLevel(int aLevel) {
-	if (aLevel < 1) {
-	    throw new IllegalArgumentException("Level can't be lower than 1 (" + aLevel + " provided)");
+		// Waiting for response
+		for (final CompletableFuture<Void> curFuture : futures) {
+			try {
+				curFuture.get(1000, TimeUnit.SECONDS);
+			} catch (InterruptedException | ExecutionException | TimeoutException e) {
+				if (!curFuture.isDone()) {
+					curFuture.cancel(true);
+				}
+			}
+		}
 	}
-	LOG.info("Changing level to level {}", aLevel);
-	_currentLevel = aLevel;
-	getMetricManager().specifyLevel(_currentLevel);
-    }
+
+	public void setLevel(int aLevel) {
+		if (aLevel < 1) {
+			throw new IllegalArgumentException("Level can't be lower than 1 (" + aLevel + " provided)");
+		}
+		LOG.info("Changing level to level {}", aLevel);
+		_currentLevel = aLevel;
+		getMetricManager().specifyLevel(_currentLevel);
+	}
 
 }
