@@ -108,7 +108,7 @@ public class Player {
 			if (!sendQuestionFuture.isDone()) {
 				sendQuestionFuture.cancel(true);
 			}
-			LOG.warn("Error while asking question {} to {}", q.getUnid(), getNickname());
+			LOG.warn("Error while asking question {} to {} : {}", q.getUnid(), getNickname(), e.getMessage());
 			LOG.debug("Error while asking question {} to {}", q.getUnid(), getNickname(), e);
 		}
 		LOG.info("Response from {} to question {} : {}", new Object[] { getNickname(), q.getUnid(), answer });
@@ -127,7 +127,8 @@ public class Player {
 			if (!sendResultFuture.isDone()) {
 				sendResultFuture.cancel(true);
 			}
-			LOG.warn("Error while notifying {} about his result for question {}", getNickname(), q.getUnid());
+			LOG.warn("Error while notifying {} about his result for question {} : {}", getNickname(), q.getUnid(),
+					e.getMessage());
 			LOG.debug("Error while notifying {} about his result for question {}", getNickname(), q.getUnid(), e);
 		}
 	}
