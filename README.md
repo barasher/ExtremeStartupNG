@@ -13,9 +13,21 @@ A success mark and a failure mark is associated to each question :
 - If the answer is correct, the candidate global score is incremented by the question success mark
 - If the answer is wrong, the candidate global score is decremented by the question failure mark
 
-### ExtremeStartupNg-Referee
+### ExtremeStartupNG-Referee
 
-The **extremestartupng-referee** is a REST webservice that can be onsidered as the test referee :
+The **extremestartupng-referee** is a REST webservice that can be considered as the test referee :
 - Candidates register to the referee
 - Level is changed through the referee
+- Metrics can be retrieved through the referee
 
+See **extremestartupng-referee** project page for more information.
+
+### ExtremeStartupNG-Candidate
+
+The **extremestartupng-candidate** that has to be cloned by candidates : it is the maven project that candidats have to complete to answer questions asked by the **extremestartupng-referee**.
+
+See **extremestartupng-candidate** project page for more information.
+
+### ExtremeStartupNG-Common
+
+The **extremestartupng-common** gathers all source code shared between **extremestartupng-referee** and **extremestartupng-candidate**.
