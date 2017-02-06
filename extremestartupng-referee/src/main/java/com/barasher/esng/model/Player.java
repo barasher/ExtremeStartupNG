@@ -108,7 +108,7 @@ public class Player {
 			if (!sendQuestionFuture.isDone()) {
 				sendQuestionFuture.cancel(true);
 			}
-			LOG.info("Error while asking question {} to {}", q.getUnid(), getNickname());
+			LOG.warn("Error while asking question {} to {}", q.getUnid(), getNickname());
 			LOG.debug("Error while asking question {} to {}", q.getUnid(), getNickname(), e);
 		}
 		LOG.info("Response from {} to question {} : {}", new Object[] { getNickname(), q.getUnid(), answer });

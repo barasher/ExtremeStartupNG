@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -64,13 +66,20 @@ public class GameTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidLevelChange() {
-		_game.setLevel(-20);
+		_game.setLevel(Optional.of(-20));
 	}
 
 	@Test
-	public void testLevelChange() {
-		_game.setLevel(2);
+	public void testLevelChangeWithSpecifiedLevel() {
+		_game.setLevel(Optional.of(2));
 		assertEquals(2, _game.getCurrentLevel());
+	}
+
+	@Test
+	public void testLevelChangeWithUnspecifiedLevel() {
+		_game.setLevel(Optional.of(2));
+		_game.setLevel(Optional.empty());
+		assertEquals(3, _game.getCurrentLevel());
 	}
 
 }
