@@ -63,11 +63,16 @@ public class Game {
 	}
 
 	public Player addPlayer(String aNickname, String aHost, int aPort) {
-		final Player p = _context.getBean(Player.class);
+		final Player p = buildNewEmptyPlayer();
 		p.setNickname(aNickname);
 		p.setUri(aHost, aPort);
+		LOG.info("Adding new player : {}", p);
 		_players.add(p);
 		return p;
+	}
+
+	protected Player buildNewEmptyPlayer() {
+		return _context.getBean(Player.class);
 	}
 
 	@Scheduled(fixedDelay = 5000)
