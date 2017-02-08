@@ -39,14 +39,8 @@ TODO
 
 To get questions, candidates have to register to the referee through a REST webservice.
 
-irst Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
-
 
 **Method** | GET
------------- | -------------
 **Path** | addPlayer
 **QueryParam _nick_ (required)** | Nickname of the candidate
 **QueryParam _host_ (required)** | Host of the candidate's **extremestartupng-candidate**
