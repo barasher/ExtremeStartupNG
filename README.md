@@ -17,10 +17,11 @@ A success mark and a failure mark is associated to each question :
 
 The **extremestartupng-referee** is a REST webservice that can be considered as the test referee :
 - Candidates register to the referee
+- It asks questions
 - Level is changed through the referee
 - Metrics can be retrieved through the referee
 
-See **extremestartupng-referee** project page for more information.
+See **extremestartupng-referee** project page for [more information](extremestartupng-referee/README.md).
 
 ### ExtremeStartupNG-Candidate
 

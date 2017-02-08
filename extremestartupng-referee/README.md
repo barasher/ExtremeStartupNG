@@ -39,13 +39,19 @@ TODO
 
 To get questions, candidates have to register to the referee through a REST webservice.
 
+Once the new candidate has been registered, the **extremestartupng-referee** starts asking him questions.
+
+#### Input
+
 * **Method** : GET
 * **Path** : addPlayer
 * **QueryParams**
-  * **_nick_** : (required) nickname of the candidate
+  * **_nick_** : (required) Nickname of the candidate
   * **_host_** : (required) Host of the candidate's **extremestartupng-candidate**
   * **_port_** : (required) Port of the candidate's **extremestartupng-candidate**
-* **Sample** : _http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_
+* **Sample** : `_http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_`
+
+#### Output
 
 ```json
 {
@@ -54,17 +60,86 @@ To get questions, candidates have to register to the referee through a REST webs
   "_score":0
 }
 ```
-
-Once the new candidate has been registered, the **extremestartupng-referee** starts asking him questions.
-
 ### Listing registered players
 
-TODO
+This service returns every registered candidates.
+
+#### Input
+
+* **Method** : GET
+* **Path** : players
+* **Sample** : `_http://192.168.0.1:8080/players`
+
+#### Output
+
+```json
+[ 
+  {
+    "_nick" : "john",
+    "_uri" : "http://192.168.0.2:8081",
+    "_score" : 120
+  }
+]
+```
 
 ### Changing level
 
-TODO
+This service changes the current level.
+
+#### Input
+
+* **Method** : GET
+* **Path** : changeLevel
+* **QueryParams**
+  * **_level_** : New level (if unspecified, the current level will be increased)
+* **Samples** :
+  * `_http://192.168.0.1:8080/changeLevel` : if the current level is 3, the new one will be 4
+  * `_http://192.168.0.1:8080/changeLevel?level=5` : change level to level 5 
+
+#### Output
+
+```json
+{
+  "_currentLevel" : 5,
+  "_players" : [
+    {
+      "_nick" : "john",
+      "_uri" : "http://192.168.0.2:8081",
+      "_score" : 150
+    }
+  ]
+}
+```
 
 ### Getting metrics
 
-TODO
+Several metrics are available during test.
+
+#### Input
+
+* **Method** : GET
+* **Path** : metrics
+* **Sample** : `http://192.168.0.1:8080/metrics`
+
+#### Available metrics
+
+* **gauge.extremeStartupNG.currentLevel** : current level,
+* **counter.extremeStartupNG.questions.count** : question count since the beginning of the test,
+* **counter.extremeStartupNG._[nickname]_.incorrectAnswer.count** : incorrect answer count,
+* **counter.extremeStartupNG._[nickname]_.correctAnswer.count** : correct answer count.
+
+
+#### Output
+
+
+```json
+{
+  "gauge.extremeStartupNG.currentLevel": 2.0,
+  "counter.extremeStartupNG.questions.count": 16,
+  "counter.extremeStartupNG.john.incorrectAnswer.count": 3,
+  "counter.extremeStartupNG.john.correctAnswer.count": 8
+}
+```
+The current level is 2, 16 questions have been asked, John gave 3 incorrect answers and 8 correct answers. 16 - (3 + 8) questions were already asked when John joined the test.
+
+#### Available metrics
