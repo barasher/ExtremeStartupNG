@@ -39,12 +39,19 @@ TODO
 
 To get questions, candidates have to register to the referee through a REST webservice.
 
-| **Method** | GET
-| **Path** | addPlayer
-| **QueryParam _nick_ (required)** | Nickname of the candidate
-| **QueryParam _host_ (required)** | Host of the candidate's **extremestartupng-candidate**
-| **QueryParam _port_(required)** | Port of the candidate's **extremestartupng-candidate**
-| **Sample** | _http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_
+irst Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
+
+
+**Method** | GET
+------------ | -------------
+**Path** | addPlayer
+**QueryParam _nick_ (required)** | Nickname of the candidate
+**QueryParam _host_ (required)** | Host of the candidate's **extremestartupng-candidate**
+**QueryParam _port_(required)** | Port of the candidate's **extremestartupng-candidate**
+**Sample** | _http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_
 
 TODO output
 
