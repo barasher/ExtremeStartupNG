@@ -49,7 +49,7 @@ Once the new candidate has been registered, the **extremestartupng-referee** sta
   * **_nick_** : (required) Nickname of the candidate
   * **_host_** : (required) Host of the candidate's **extremestartupng-candidate**
   * **_port_** : (required) Port of the candidate's **extremestartupng-candidate**
-* **Sample** : `_http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_`
+* **Sample** : `http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081`
 
 #### Output
 
@@ -68,7 +68,7 @@ This service returns every registered candidates.
 
 * **Method** : GET
 * **Path** : players
-* **Sample** : `_http://192.168.0.1:8080/players`
+* **Sample** : `http://192.168.0.1:8080/players`
 
 #### Output
 
@@ -93,8 +93,8 @@ This service changes the current level.
 * **QueryParams**
   * **_level_** : New level (if unspecified, the current level will be increased)
 * **Samples** :
-  * `_http://192.168.0.1:8080/changeLevel` : if the current level is 3, the new one will be 4
-  * `_http://192.168.0.1:8080/changeLevel?level=5` : change level to level 5 
+  * `http://192.168.0.1:8080/changeLevel` : if the current level is 3, the new one will be 4
+  * `http://192.168.0.1:8080/changeLevel?level=5` : change level to level 5 
 
 #### Output
 
@@ -142,4 +142,3 @@ Several metrics are available during test.
 ```
 The current level is 2, 16 questions have been asked, John gave 3 incorrect answers and 8 correct answers. 16 - (3 + 8) questions were already asked when John joined the test.
 
-#### Available metrics
