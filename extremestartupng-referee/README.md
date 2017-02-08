@@ -39,15 +39,21 @@ TODO
 
 To get questions, candidates have to register to the referee through a REST webservice.
 
+* **Method** : GET
+* **Path** : addPlayer
+* **QueryParams**
+  * **_nick_** : (required) nickname of the candidate
+  * **_host_** : (required) Host of the candidate's **extremestartupng-candidate**
+  * **_port_** : (required) Port of the candidate's **extremestartupng-candidate**
+* **Sample** : _http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_
 
-**Method** | GET
-**Path** | addPlayer
-**QueryParam _nick_ (required)** | Nickname of the candidate
-**QueryParam _host_ (required)** | Host of the candidate's **extremestartupng-candidate**
-**QueryParam _port_(required)** | Port of the candidate's **extremestartupng-candidate**
-**Sample** | _http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081_
-
-TODO output
+```json
+{
+  "_nick" : "john",
+  "_uri" : "http://192.168.0.2:8081",
+  "_score":0
+}
+```
 
 Once the new candidate has been registered, the **extremestartupng-referee** starts asking him questions.
 
