@@ -90,6 +90,8 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptor>src/assembly/bin.xml</descriptor>
+					<finalName>esng-referee</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 				<executions>
 					<execution>
@@ -148,7 +150,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-<!-- 							<classpathPrefix>lib/</classpathPrefix> -->
+							<!-- <classpathPrefix>lib/</classpathPrefix> -->
 							<mainClass>com.barasher.esng.Main</mainClass>
 						</manifest>
 						<manifestEntries>

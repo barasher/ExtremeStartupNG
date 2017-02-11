@@ -1,3 +1,8 @@
 language: java
-jdk: oraclejdk8
-install: mvn install -DskipTests=true
+jdk:
+  - oraclejdk8
+services:
+  - docker
+install:
+  - mvn clean package
+  - docker build -t barasher/esng-referee:latest extremestartupng-referee/
