@@ -8,19 +8,44 @@
 	<name>ExtremeStartupNG</name>
 	<url>http://maven.apache.org</url>
 
-	<repositories>
-		<repository>
-			<id>apache.snapshots</id>
-			<name>Apache Development Snapshot Repository</name>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+ <developers>
+    <developer>
+      <id>barasher</id>
+      <name>Arnaud Barrat</name>
+      <email>arnaud.barasher@gmail.com</email>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+</developers>
+
+  <ciManagement>
+    <system>travis</system>
+    <url>https://travis-ci.org/barasher/ExtremeStartupNG</url>
+  </ciManagement>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/barasher/ExtremeStartupNG/issues</url>
+</issueManagement>
+
+  <scm>
+    <url>https://github.com/barasher/ExtremeStartupNG</url>
+    <connection>scm:git:ssh://git@github.com:barasher/ExtremeStartupNG.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:barasher/ExtremeStartupNG.git</developerConnection>
+</scm>
+
+
+  <distributionManagement>
+    <downloadUrl>https://github.com/barasher/ExtremeStartupNG</downloadUrl>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+</distributionManagement>
 
 	<modules>
 		<module>extremestartupng-referee</module>

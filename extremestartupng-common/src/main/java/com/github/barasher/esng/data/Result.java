@@ -1,4 +1,4 @@
-package com.barasher.esng.data;
+package com.github.barasher.esng.data;
 
 import java.util.Objects;
 

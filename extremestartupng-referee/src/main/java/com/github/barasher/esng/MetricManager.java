@@ -1,11 +1,11 @@
-package com.barasher.esng;
+package com.github.barasher.esng;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.actuate.metrics.GaugeService;
 import org.springframework.context.annotation.Lazy;
 
-import com.barasher.esng.model.Player;
+import com.github.barasher.esng.model.Player;
 
 public class MetricManager {
 

@@ -1,4 +1,4 @@
-package com.barasher.esng.data;
+package com.github.barasher.esng.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import com.github.barasher.esng.data.Result;
 
 @RunWith(Parameterized.class)
 public class ResultEqualsTest {

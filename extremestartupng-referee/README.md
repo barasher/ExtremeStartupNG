@@ -31,7 +31,35 @@ Each family question has a success and a failure mark. If a candidate answer is 
 
 ## Execution
 
-TODO
+### Java
+
+FIXME
+
+### Docker
+
+FIXME
+
+## Configuration
+
+**Extremestartupng-referee** can be configured through a YAML file.
+
+FIXME
+
+Here is a sample :
+
+```yaml
+server:
+  port: 8081
+esng:
+  questions:
+    -
+      family: "aFamily"
+      enabled: false
+    -
+      family: "anotherFamily"
+      level: 3
+```
+
 
 ## Classical workflow
 

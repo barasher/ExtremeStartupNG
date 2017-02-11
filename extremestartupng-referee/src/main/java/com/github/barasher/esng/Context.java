@@ -1,4 +1,4 @@
-package com.barasher.esng;
+package com.github.barasher.esng;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,9 +7,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
-import com.barasher.esng.model.Game;
-import com.barasher.esng.model.Player;
-import com.barasher.esng.question.QuestionFactory;
+import com.github.barasher.esng.model.Game;
+import com.github.barasher.esng.model.Player;
+import com.github.barasher.esng.question.QuestionFactory;
 
 @Configuration
 @EnableAsync

@@ -1,4 +1,4 @@
-package com.barasher.esng.data;
+package com.github.barasher.esng.data;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.barasher.esng.data.Result;
 
 public class ResultTest {
 
