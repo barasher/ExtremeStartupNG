@@ -43,7 +43,11 @@ FIXME
 
 **Extremestartupng-referee** can be configured through a YAML file.
 
-FIXME
+* **server.port** : listening port for the **extremestartupng-referee**'s REST webservices
+* **esng.questions** : question configuration (list)
+  * esng.questions**.family** : specify the question family that is beeing configured
+  * esng.questions**.enabled** : enable (default, "true" value) or disable ("false" value) the question family
+  * esng.questions**.level** : overriding level for the question family
 
 Here is a sample :
 
@@ -59,6 +63,11 @@ esng:
       family: "anotherFamily"
       level: 3
 ```
+
+With this configuration :
+* The REST webservices will be listening on port 8081
+* The question family `aFamily` will be disabled
+* The question family `anotherFamily` will be used from level 3
 
 
 ## Classical workflow
