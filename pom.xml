@@ -1,14 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.barasher</groupId>
-	<artifactId>extremestartupng</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>ExtremeStartupNG</name>
-	<url>http://maven.apache.org</url>
-
- <developers>
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.barasher</groupId>
+  <artifactId>extremestartupng</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>ExtremeStartupNG</name>
+  <url>http://maven.apache.org</url>
+  <developers>
     <developer>
       <id>barasher</id>
       <name>Arnaud Barrat</name>
@@ -17,8 +16,7 @@
         <role>Java Developer</role>
       </roles>
     </developer>
-</developers>
-
+  </developers>
   <ciManagement>
     <system>travis</system>
     <url>https://travis-ci.org/barasher/ExtremeStartupNG</url>
@@ -26,15 +24,12 @@
   <issueManagement>
     <system>github</system>
     <url>https://github.com/barasher/ExtremeStartupNG/issues</url>
-</issueManagement>
-
+  </issueManagement>
   <scm>
     <url>https://github.com/barasher/ExtremeStartupNG</url>
     <connection>scm:git:ssh://git@github.com:barasher/ExtremeStartupNG.git</connection>
     <developerConnection>scm:git:ssh://git@github.com:barasher/ExtremeStartupNG.git</developerConnection>
-</scm>
-
-
+  </scm>
   <distributionManagement>
     <downloadUrl>https://github.com/barasher/ExtremeStartupNG</downloadUrl>
     <snapshotRepository>
@@ -45,13 +40,10 @@
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-</distributionManagement>
-
-	<modules>
-		<module>extremestartupng-referee</module>
-		<module>extremestartupng-common</module>
-		<module>extremestartupng-candidate</module>
-	</modules>
-
-
+  </distributionManagement>
+  <modules>
+    <module>extremestartupng-referee</module>
+    <module>extremestartupng-common</module>
+    <module>extremestartupng-candidate</module>
+  </modules>
 </project>
