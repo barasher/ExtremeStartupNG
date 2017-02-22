@@ -11,6 +11,11 @@ import com.github.barasher.esng.model.Game;
 import com.github.barasher.esng.model.Player;
 import com.github.barasher.esng.question.QuestionFactory;
 
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+
 @Configuration
 @EnableAsync
 @EnableScheduling
@@ -40,6 +45,13 @@ public class Context {
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
+	}
+
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("com.github.barasher.esng.controller"))
+				.paths(PathSelectors.any()).build();
 	}
 
 }
