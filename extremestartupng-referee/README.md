@@ -35,8 +35,13 @@ Each family question has a success and a failure mark. If a candidate answer is 
 
 **Extremestartupng-referee** can be executed using different methods.
 
-* _Maven-style_ execution : `mvn clean spring-boot:run`.
-* Classical "java" style :
+#### Maven-style
+
+`mvn clean spring-boot:run`.
+
+
+#### Classical java-style
+
 ```
 mvn clean package
 java -cp 'target/*:target/lib/*' com.github.barasher.esng.Main
@@ -52,7 +57,12 @@ java -cp '/tmp/esng-referee/*' com.github.barasher.esng.Main
 
 ### Docker
 
-FIXME
+A Docker image of the **extremestartupng-referee** is available on the docker hub.
+
+```
+docker pull barasher/extremestartupng-referee:1.0
+docker run --rm -it -p 8080:8080 barasher/extremestartupng-referee:1.0
+```
 
 ## Configuration
 
