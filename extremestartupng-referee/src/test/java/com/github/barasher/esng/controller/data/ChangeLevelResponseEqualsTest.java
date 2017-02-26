@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.github.barasher.esng.controller.data.ChangeLevelResponse;
 import com.github.barasher.esng.model.Player;
 
 @RunWith(Parameterized.class)
@@ -38,18 +37,19 @@ public class ChangeLevelResponseEqualsTest {
 		final Set<Player> refPlayers = new HashSet<>();
 		refPlayers.add(new Player("n", "h", 80));
 
-		final ChangeLevelResponse ref = build(42, refPlayers);
+		final ChangeLevelResponse ref = build(true, 42, refPlayers);
 
 		tests.add(new Object[] { ref, ref, true, "same" });
 		tests.add(new Object[] { ref, null, false, "null" });
-		tests.add(new Object[] { ref, build(42, refPlayers), true, "clone" });
+		tests.add(new Object[] { ref, build(true, 42, refPlayers), true, "clone" });
 		tests.add(new Object[] { ref, "truc", false, "other type" });
 
-		tests.add(new Object[] { ref, build(43, refPlayers), false, "level" });
+		tests.add(new Object[] { ref, build(false, 42, refPlayers), false, "state" });
+		tests.add(new Object[] { ref, build(true, 43, refPlayers), false, "level" });
 		final Set<Player> otherPlayers = new HashSet<>();
 		otherPlayers.add(new Player("n2", "h2", 12));
-		tests.add(new Object[] { ref, build(42, otherPlayers), false, "players" });
-		tests.add(new Object[] { ref, build(42, null), false, "players null" });
+		tests.add(new Object[] { ref, build(true, 42, otherPlayers), false, "players" });
+		tests.add(new Object[] { ref, build(true, 42, null), false, "players null" });
 
 		return tests;
 	}

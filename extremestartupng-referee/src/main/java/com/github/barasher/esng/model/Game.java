@@ -34,11 +34,13 @@ public class Game {
 	@Autowired
 	private ApplicationContext _context;
 
+	private boolean _isPaused;
 	private int _currentLevel;
 	private final Set<Player> _players = new HashSet<>();
 
 	public Game() {
 		_currentLevel = 1;
+		_isPaused = true;
 	}
 
 	@PostConstruct
@@ -62,6 +64,10 @@ public class Game {
 		return _questionFactory;
 	}
 
+	public boolean isPaused() {
+		return _isPaused;
+	}
+
 	public Player addPlayer(String aNickname, String aHost, int aPort) {
 		final Player p = buildNewEmptyPlayer();
 		p.setNickname(aNickname);
@@ -75,12 +81,21 @@ public class Game {
 		return _context.getBean(Player.class);
 	}
 
+	QuestionContext getQuestion() {
+		QuestionContext qc = null;
+		if (_isPaused) {
+			getMetricManager().notifyPauseQuestion();
+			qc = getQuestionFactory().buildPauseQuestion();
+		} else {
+			getMetricManager().notifyNewQuestion();
+			qc = getQuestionFactory().build(getCurrentLevel());
+		}
+		return qc;
+	}
+
 	@Scheduled(fixedDelay = 5000)
 	public void askQuestions() {
-		getMetricManager().notifyNewQuestion();
-
-		// Generating question
-		final QuestionContext qc = getQuestionFactory().build(getCurrentLevel());
+		final QuestionContext qc = getQuestion();
 		LOG.info("New question : {}", qc.getQuestion());
 
 		// Thread exécution
@@ -108,6 +123,16 @@ public class Game {
 		LOG.info("Changing level to level {}", lvl);
 		_currentLevel = lvl;
 		getMetricManager().specifyLevel(_currentLevel);
+	}
+
+	public void pause() {
+		_isPaused = true;
+		LOG.info("Game paused");
+	}
+
+	public void run() {
+		_isPaused = false;
+		LOG.info("Game is running");
 	}
 
 }

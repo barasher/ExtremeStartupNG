@@ -55,6 +55,20 @@ public class RestEndpoint {
 		return new ChangeLevelResponse(getGame());
 	}
 
+	@ApiOperation(value = "Pause game")
+	@RequestMapping(method = RequestMethod.GET, path = "/pause", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ChangeLevelResponse pause() {
+		getGame().pause();
+		return new ChangeLevelResponse(getGame());
+	}
+
+	@ApiOperation(value = "[Re]Start game")
+	@RequestMapping(method = RequestMethod.GET, path = "/start", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ChangeLevelResponse resume() {
+		getGame().run();
+		return new ChangeLevelResponse(getGame());
+	}
+
 	Game getGame() {
 		return _game;
 	}

@@ -11,6 +11,7 @@ public class MetricManager {
 
 	private static final String PREFIX = "extremeStartupNG.";
 	private static final String NEW_QUESTION_METRIC = PREFIX + "questions.count";
+	private static final String NEW_PAUSE_QUESTION_METRIC = PREFIX + "pauseQuestions.count";
 	private static final String CORRECT_ANSWER_SUFFIX = ".correctAnswer.count";
 	private static final String INCORRECT_ANSWER_SUFFIX = ".incorrectAnswer.count";
 	private static final String CURRENT_LEVEL = PREFIX + "currentLevel";
@@ -25,6 +26,10 @@ public class MetricManager {
 
 	public void notifyNewQuestion() {
 		getCounterService().increment(NEW_QUESTION_METRIC);
+	}
+
+	public void notifyPauseQuestion() {
+		getCounterService().increment(NEW_PAUSE_QUESTION_METRIC);
 	}
 
 	public void notifyAnswer(Player aPlayer, boolean aIsCorrect) {

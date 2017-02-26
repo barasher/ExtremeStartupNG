@@ -1,6 +1,7 @@
 package com.github.barasher.esng.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -20,9 +21,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.web.client.RestTemplate;
 
 import com.github.barasher.esng.Context;
+import com.github.barasher.esng.MetricManager;
 import com.github.barasher.esng.configuration.EsngConfiguration;
-import com.github.barasher.esng.model.Game;
-import com.github.barasher.esng.model.Player;
+import com.github.barasher.esng.question.QuestionFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {
@@ -82,6 +83,40 @@ public class GameTest {
 		_game.setLevel(Optional.of(2));
 		_game.setLevel(Optional.empty());
 		assertEquals(3, _game.getCurrentLevel());
+	}
+
+	@Test
+	public void testPauseResumeWorkflow() {
+		_game.setLevel(Optional.of(2));
+		_game.pause();
+		assertEquals(2, _game.getCurrentLevel());
+		assertTrue(_game.isPaused());
+		_game.run();
+		assertEquals(2, _game.getCurrentLevel());
+		assertFalse(_game.isPaused());
+	}
+
+	@Test
+	public void testGetQuestion() {
+		final Game g = new Game();
+		final Game spiedGame = Mockito.spy(g);
+		final QuestionFactory qfMock = Mockito.mock(QuestionFactory.class);
+		Mockito.when(spiedGame.getQuestionFactory()).thenReturn(qfMock);
+		final MetricManager mm = Mockito.mock(MetricManager.class);
+		Mockito.when(spiedGame.getMetricManager()).thenReturn(mm);
+
+		Mockito.verify(qfMock, Mockito.times(0)).buildPauseQuestion();
+		Mockito.verify(qfMock, Mockito.times(0)).build(Mockito.anyInt());
+
+		spiedGame.pause();
+		spiedGame.getQuestion();
+		Mockito.verify(qfMock, Mockito.times(1)).buildPauseQuestion();
+		Mockito.verify(qfMock, Mockito.times(0)).build(Mockito.anyInt());
+
+		spiedGame.run();
+		spiedGame.getQuestion();
+		Mockito.verify(qfMock, Mockito.times(1)).buildPauseQuestion();
+		Mockito.verify(qfMock, Mockito.times(1)).build(Mockito.anyInt());
 	}
 
 }

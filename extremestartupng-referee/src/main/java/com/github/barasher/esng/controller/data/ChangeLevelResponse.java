@@ -12,6 +12,8 @@ public class ChangeLevelResponse {
 
 	@JsonProperty("_currentLevel")
 	private int _currentLevel;
+	@JsonProperty("_isPaused")
+	private boolean _isPaused;
 	@JsonProperty("_players")
 	private Set<Player> _players;
 
@@ -22,6 +24,7 @@ public class ChangeLevelResponse {
 	public ChangeLevelResponse(Game aGame) {
 		_players = aGame.getPlayers();
 		_currentLevel = aGame.getCurrentLevel();
+		_isPaused = aGame.isPaused();
 	}
 
 	@JsonIgnore
@@ -34,6 +37,11 @@ public class ChangeLevelResponse {
 		return _players;
 	}
 
+	@JsonIgnore
+	public boolean isPaused() {
+		return _isPaused;
+	}
+
 	@Override
 	public boolean equals(Object anotherObject) {
 		if (anotherObject == null || !anotherObject.getClass().equals(ChangeLevelResponse.class)) {
@@ -42,17 +50,20 @@ public class ChangeLevelResponse {
 		final ChangeLevelResponse other = (ChangeLevelResponse) anotherObject;
 		boolean equals = Objects.equals(_currentLevel, other._currentLevel);
 		equals = equals && Objects.equals(_players, other._players);
+		equals = equals && Objects.equals(_isPaused, other._isPaused);
 		return equals;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_currentLevel, _players);
+		return Objects.hash(_currentLevel, _players, _isPaused);
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder("Level ").append(_currentLevel).append(" : ").append(_players).toString();
+		final String state = _isPaused ? "paused" : "running";
+		return new StringBuilder("(").append(state).append(") level ").append(_currentLevel).append(" : ")
+				.append(_players).toString();
 	}
 
 }

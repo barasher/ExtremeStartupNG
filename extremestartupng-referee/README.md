@@ -33,7 +33,22 @@ Each family question has a success and a failure mark. If a candidate answer is 
 
 ### Java
 
-FIXME
+**Extremestartupng-referee** can be executed using different methods.
+
+* _Maven-style_ execution : `mvn clean spring-boot:run`.
+* Classical "java" style :
+```
+mvn clean package
+java -cp 'target/*:target/lib/*' com.github.barasher.esng.Main
+```
+
+The command  `mvn clean package` creates a tarball archive that gathers alls JAR dependencies for **extremestartupng-referee** (and its JAR itself) :
+
+```
+mvn clean package
+tar -xzf target/esng-referee.tar.gz -C /tmp/
+java -cp '/tmp/esng-referee/*' com.github.barasher.esng.Main
+```
 
 ### Docker
 
@@ -42,6 +57,12 @@ FIXME
 ## Configuration
 
 **Extremestartupng-referee** can be configured through a YAML file.
+
+To specify which configuration file to use, you have to add a `-D` parameter in the command line (`-Dspring.config.location`) :
+
+```
+java -cp '/tmp/esng-referee/*' -Dspring.config.location=/tmp/application.yaml com.github.barasher.esng.Main
+```
 
 * **server.port** : listening port for the **extremestartupng-referee**'s REST webservices
 * **esng.questions** : question configuration (list)
@@ -70,7 +91,17 @@ With this configuration :
 * The question family `anotherFamily` will be used from level 3
 
 
-## Classical workflow
+## Services and classical workflow
+
+Here is the "classical" workflow :
+- The **extremestartupng-referee** starts
+- A sample "pause" question will be asked to every candidate (but no one will receive it because there is no candidate that has been registered)
+- All the candidates are getting registered. When registered, each candidate will receive a sample question that doesn't provide any point.
+- The referee starts the game : real questions will be asked
+
+### Swagger
+
+A `swagger` UI is available : `http://192.168.0.1:8080/swagger-ui.html`
 
 ### Candidate registering
 
@@ -148,6 +179,57 @@ This service changes the current level.
 }
 ```
 
+### Start/resume game
+
+This service starts or resumes the game (if it has been paused).
+
+#### Input
+
+* **Method** : GET
+* **Path** : pause
+* **Sample** : `http://192.168.0.1:8080/pause`
+
+#### Output
+
+```json
+{
+  "_currentLevel" : 5,
+  "_players" : [
+    {
+      "_nick" : "john",
+      "_uri" : "http://192.168.0.2:8081",
+      "_score" : 150
+    }
+  ]
+}
+```
+
+
+### Pause game
+
+This service pauses the game : a sample question will be asked.
+
+#### Input
+
+* **Method** : GET
+* **Path** : pause
+* **Sample** : `http://192.168.0.1:8080/pause`
+
+#### Output
+
+```json
+{
+  "_currentLevel" : 5,
+  "_players" : [
+    {
+      "_nick" : "john",
+      "_uri" : "http://192.168.0.2:8081",
+      "_score" : 150
+    }
+  ]
+}
+```
+
 ### Getting metrics
 
 Several metrics are available during test.
@@ -155,8 +237,8 @@ Several metrics are available during test.
 #### Input
 
 * **Method** : GET
-* **Path** : metrics
-* **Sample** : `http://192.168.0.1:8080/metrics`
+* **Path** : resume
+* **Sample** : `http://192.168.0.1:8080/resume`
 
 #### Available metrics
 

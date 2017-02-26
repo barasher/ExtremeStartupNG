@@ -124,7 +124,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/tgz</outputDirectory>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 							<resources>
 								<resource>
 									<directory>resources</directory>
@@ -146,7 +146,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/tgz</outputDirectory>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>

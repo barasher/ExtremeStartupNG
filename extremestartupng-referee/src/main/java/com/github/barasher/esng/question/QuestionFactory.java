@@ -15,6 +15,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import com.github.barasher.esng.configuration.EsngConfiguration;
 import com.github.barasher.esng.configuration.EsngConfiguration.QuestionConfiguration;
+import com.github.barasher.esng.question.impl.PauseQuestionProvider;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -29,6 +30,8 @@ public class QuestionFactory {
 
 	private final Multimap<Integer, IQuestionProvider> _providersByLevel = ArrayListMultimap.create();
 	private int _maxLevel = -1;
+
+	private IQuestionProvider _pauseQuestionProvider;
 
 	static int random(int aIncludedMin, int aExcludedMax) {
 		return RANDOM.nextInt(aExcludedMax - aIncludedMin) + aIncludedMin;
@@ -100,6 +103,9 @@ public class QuestionFactory {
 		for (int i = 1; i < getMaxLevel(); i++) {
 			_providersByLevel.putAll(i + 1, _providersByLevel.get(i));
 		}
+
+		// pauseQuestion
+		_pauseQuestionProvider = new PauseQuestionProvider();
 	}
 
 	private QuestionProvider getQuestionProvider(Class<?> aClass) {
@@ -130,6 +136,10 @@ public class QuestionFactory {
 
 	public QuestionContext build(int aLevel) {
 		return getProvided(aLevel).provide();
+	}
+
+	public QuestionContext buildPauseQuestion() {
+		return _pauseQuestionProvider.provide();
 	}
 
 	private QuestionConfiguration getQuestionConfiguration(String aFamily) {

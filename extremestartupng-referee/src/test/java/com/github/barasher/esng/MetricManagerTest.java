@@ -5,7 +5,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.actuate.metrics.GaugeService;
 
-import com.github.barasher.esng.MetricManager;
 import com.github.barasher.esng.model.Player;
 
 public class MetricManagerTest {
@@ -68,6 +67,17 @@ public class MetricManagerTest {
 		m.specifyLevel(42);
 		// check
 		Mockito.verify(gaugeM, Mockito.times(1)).submit("extremeStartupNG.currentLevel", 42);
+	}
+
+	@Test
+	public void notifyPauseQuestionTest() {
+		// set up
+		final CounterService counterM = Mockito.mock(CounterService.class);
+		final MetricManager m = build(counterM, null);
+		// call
+		m.notifyPauseQuestion();
+		// check
+		Mockito.verify(counterM, Mockito.times(1)).increment("extremeStartupNG.pauseQuestions.count");
 	}
 
 }
