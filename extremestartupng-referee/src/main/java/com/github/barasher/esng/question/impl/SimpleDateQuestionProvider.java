@@ -10,7 +10,7 @@ import com.github.barasher.esng.question.IQuestionProvider;
 import com.github.barasher.esng.question.QuestionContext;
 import com.github.barasher.esng.question.QuestionProvider;
 
-@QuestionProvider(family = "simpleDate", level = 2)
+@QuestionProvider(family = "simpleDate", level = 4)
 public class SimpleDateQuestionProvider implements IQuestionProvider {
 
 	@Override
