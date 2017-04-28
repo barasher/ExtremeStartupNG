@@ -4,10 +4,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class FibonnaciQuestionTest extends AbstractFibonnaciQuestionTest {
+public class AdvancedFibonnaciQuestionTest extends AbstractFibonnaciQuestionTest {
 
-	public FibonnaciQuestionTest() {
-		super(new FibonnaciQuestionProvider());
+	public AdvancedFibonnaciQuestionTest() {
+		super(new AdvancedFibonnaciQuestionProvider());
 	}
 
 }
