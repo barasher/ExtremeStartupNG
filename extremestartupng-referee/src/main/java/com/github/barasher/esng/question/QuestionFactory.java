@@ -81,7 +81,8 @@ public class QuestionFactory {
 
 						// registering
 						_providersByLevel.put(curLvl, (IQuestionProvider) c.newInstance());
-						LOG.info("Registering question {} for level {}", c.getCanonicalName(), curLvl);
+						LOG.info("Registering {} family ({}) for level {}", curQuestionProvider.family(),
+								c.getCanonicalName(), curLvl);
 						_maxLevel = Math.max(_maxLevel, curLvl);
 
 					}
