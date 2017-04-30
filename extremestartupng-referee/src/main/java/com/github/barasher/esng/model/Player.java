@@ -21,6 +21,7 @@ import com.github.barasher.esng.question.QuestionContext;
 public class Player {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Player.class);
+	private static int ANSWERING_TIMEOUT_SEC = 4;
 
 	@JsonIgnore
 	@Autowired
@@ -103,7 +104,7 @@ public class Player {
 			sendQuestionFuture = CompletableFuture.supplyAsync(() -> {
 				return sendQuestion(q);
 			});
-			answer = sendQuestionFuture.get(1, TimeUnit.SECONDS);
+			answer = sendQuestionFuture.get(ANSWERING_TIMEOUT_SEC, TimeUnit.SECONDS);
 		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			if (!sendQuestionFuture.isDone()) {
 				sendQuestionFuture.cancel(true);
