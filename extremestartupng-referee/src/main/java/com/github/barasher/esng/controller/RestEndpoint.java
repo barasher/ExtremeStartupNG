@@ -1,7 +1,8 @@
 package com.github.barasher.esng.controller;
 
-import java.util.Optional;
 import java.util.Set;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,8 +16,11 @@ import com.github.barasher.esng.controller.data.ChangeLevelResponse;
 import com.github.barasher.esng.model.Game;
 import com.github.barasher.esng.model.Player;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 public class RestEndpoint {
@@ -39,7 +43,7 @@ public class RestEndpoint {
 	}
 
 	@ApiOperation(value = "Add a new player")
-	@RequestMapping(method = RequestMethod.GET, path = "/addPlayer", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/player", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Player addPlayer(
 			@ApiParam(name = "nick", value = "Candidate's nickname", required = true) @RequestParam(value = "nick", required = true) String aNickName,
 			@ApiParam(name = "host", value = "Candidate's host", required = true) @RequestParam(required = true, value = "host") String aHost,
@@ -47,23 +51,60 @@ public class RestEndpoint {
 		return getGame().addPlayer(aNickName, aHost, aPort);
 	}
 
-	@ApiOperation(value = "Change current level")
-	@RequestMapping(method = RequestMethod.GET, path = "/changeLevel", produces = MediaType.APPLICATION_JSON_VALUE)
+	// @ApiOperation(value = "Remove a player")
+	// @RequestMapping(method = RequestMethod.DELETE, path = "/player/{nick}",
+	// produces = MediaType.APPLICATION_JSON_VALUE)
+	// public @ResponseBody Set<Player> removePlayer(@ApiParam(name = "nick",
+	// value = "Candidate's nickname", required = true) @PathParam(value =
+	// "nick") String aNickName) {
+	// getGame().removePlayer(aNickName);
+	// return getPlayers();
+	// }
+
+	// @ApiOperation(value = "Remove a player")
+	// @ApiImplicitParams({
+	// @ApiImplicitParam(name = "nick", value = "Candidate's nickname", required
+	// = true, dataType = "string", paramType = "path") })
+	// @RequestMapping(method = RequestMethod.DELETE, path = "/player/{nick}",
+	// produces = MediaType.APPLICATION_JSON_VALUE)
+	// public @ResponseBody Set<Player> removePlayer(@ApiIgnore @PathParam(value
+	// = "nick") String nick) {
+	// getGame().removePlayer(nick);
+	// return getPlayers();
+	// }
+
+	@ApiOperation(value = "Remove a player")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "nick", value = "Candidate's nickname", required = true, dataType = "string", paramType = "path") })
+	@RequestMapping(method = RequestMethod.DELETE, path = "/player/{nick}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Set<Player> removePlayer(@ApiIgnore @PathParam(value = "nick") String nick) {
+		getGame().removePlayer(nick);
+		return getPlayers();
+	}
+
+	@ApiOperation(value = "Increment current level")
+	@RequestMapping(method = RequestMethod.POST, path = "/level", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ChangeLevelResponse incrementLevel() {
+		return changeLevel(getGame().getCurrentLevel() + 1);
+	}
+
+	@ApiOperation(value = "Change level")
+	@RequestMapping(method = RequestMethod.POST, path = "/level/{level}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChangeLevelResponse changeLevel(
-			@ApiParam(name = "level", value = "New level (default : next one)", required = false) @RequestParam(value = "level", required = false) Integer aLevel) {
-		getGame().setLevel(Optional.ofNullable(aLevel));
+			@ApiParam(name = "lvl", value = "New level", required = false) @PathParam(value = "level") Integer aLevel) {
+		getGame().setLevel(aLevel);
 		return new ChangeLevelResponse(getGame());
 	}
 
 	@ApiOperation(value = "Pause game")
-	@RequestMapping(method = RequestMethod.GET, path = "/pause", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/pause", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChangeLevelResponse pause() {
 		getGame().pause();
 		return new ChangeLevelResponse(getGame());
 	}
 
 	@ApiOperation(value = "[Re]Start game")
-	@RequestMapping(method = RequestMethod.GET, path = "/start", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/start", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ChangeLevelResponse resume() {
 		getGame().run();
 		return new ChangeLevelResponse(getGame());

@@ -3,14 +3,12 @@ package com.github.barasher.esng.controller;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import com.github.barasher.esng.controller.RestEndpoint;
 import com.github.barasher.esng.controller.data.ChangeLevelResponse;
 import com.github.barasher.esng.model.Game;
 import com.github.barasher.esng.model.Player;
@@ -54,9 +52,9 @@ public class RestEndpointTest {
 		Mockito.when(mockedGame.getCurrentLevel()).thenReturn(42);
 		final RestEndpoint ep = new RestEndpoint(mockedGame);
 		// call
-		ep.changeLevel(null);
+		ep.incrementLevel();
 		// check
-		Mockito.verify(mockedGame, Mockito.times(1)).setLevel(Optional.empty());
+		Mockito.verify(mockedGame, Mockito.times(1)).setLevel(43);
 	}
 
 	@Test
@@ -67,7 +65,7 @@ public class RestEndpointTest {
 		// call
 		ep.changeLevel(72);
 		// check
-		Mockito.verify(mockedGame, Mockito.times(1)).setLevel(Optional.of(72));
+		Mockito.verify(mockedGame, Mockito.times(1)).setLevel(72);
 	}
 
 	@Test

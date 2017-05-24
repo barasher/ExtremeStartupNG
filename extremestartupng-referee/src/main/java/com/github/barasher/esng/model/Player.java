@@ -112,11 +112,13 @@ public class Player {
 			LOG.warn("Error while asking question {} to {} : {}", q.getUnid(), getNickname(), e.getMessage());
 			LOG.debug("Error while asking question {} to {}", q.getUnid(), getNickname(), e);
 		}
-		LOG.info("Response from {} to question {} : {}", new Object[] { getNickname(), q.getUnid(), answer });
 
 		final boolean isCorrect = aQuestionContext.isAnswerCorrect(answer);
 		addScore(isCorrect ? aQuestionContext.getPointsOnSuccess() : aQuestionContext.getPointsOnFailure());
 		_metrics.notifyAnswer(this, isCorrect);
+
+		LOG.info("Response from {} to question {} : {}, score : {}",
+				new Object[] { getNickname(), q.getUnid(), answer, getScore() });
 
 		// émission du résultat
 		final Result result = new Result(q.getUnid(), isCorrect, _score);

@@ -3,7 +3,6 @@ package com.github.barasher.esng.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -116,12 +115,10 @@ public class Game {
 		}
 	}
 
-	public void setLevel(Optional<Integer> aLevel) {
-		Preconditions.checkNotNull(aLevel, "Level optional can't be null");
-		final int lvl = aLevel.orElse(getCurrentLevel() + 1);
-		Preconditions.checkArgument(lvl >= 1, "Level can't be lower than 1 (" + aLevel + " provided)");
-		LOG.info("Changing level to level {}", lvl);
-		_currentLevel = lvl;
+	public void setLevel(int aLevel) {
+		Preconditions.checkArgument(aLevel >= 1, "Level can't be lower than 1 (" + aLevel + " provided)");
+		LOG.info("Changing level to level {}", aLevel);
+		_currentLevel = aLevel;
 		getMetricManager().specifyLevel(_currentLevel);
 	}
 
@@ -133,6 +130,11 @@ public class Game {
 	public void run() {
 		_isPaused = false;
 		LOG.info("Game is running");
+	}
+
+	public boolean removePlayer(String aNickName) {
+		LOG.info("Removing player {}", aNickName);
+		return _players.removeIf(cur -> cur.getNickname().equalsIgnoreCase(aNickName));
 	}
 
 }

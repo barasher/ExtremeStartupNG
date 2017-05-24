@@ -2,10 +2,9 @@ package com.github.barasher.esng.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,33 +60,46 @@ public class GameTest {
 
 	@Test
 	public void testAddPlayer() {
-		assertNotNull(_game.getPlayers());
-		assertTrue(_game.getPlayers().isEmpty());
 		final Player p = _game.addPlayer("n", "h", 42);
 		assertTrue(_game.getPlayers().contains(p));
 	}
 
+	@Test
+	public void testRemovePlayer() {
+		final String nickName = UUID.randomUUID().toString();
+
+		// add a test player
+		final Player p = _game.addPlayer(nickName, "h", 42);
+		assertTrue(_game.getPlayers().contains(p));
+
+		// remove a player that does not exists
+		int countBefore = _game.getPlayers().size();
+		final String nonExistingNickname = UUID.randomUUID().toString();
+		assertFalse(_game.removePlayer(nonExistingNickname));
+		assertEquals(countBefore, _game.getPlayers().size());
+		assertTrue(_game.getPlayers().contains(p));
+
+		// remove the test player
+		countBefore = _game.getPlayers().size();
+		assertTrue(_game.removePlayer(nickName));
+		assertEquals(countBefore - 1, _game.getPlayers().size());
+		assertFalse(_game.getPlayers().contains(p));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidLevelChange() {
-		_game.setLevel(Optional.of(-20));
+		_game.setLevel(-20);
 	}
 
 	@Test
 	public void testLevelChangeWithSpecifiedLevel() {
-		_game.setLevel(Optional.of(2));
+		_game.setLevel(2);
 		assertEquals(2, _game.getCurrentLevel());
 	}
 
 	@Test
-	public void testLevelChangeWithUnspecifiedLevel() {
-		_game.setLevel(Optional.of(2));
-		_game.setLevel(Optional.empty());
-		assertEquals(3, _game.getCurrentLevel());
-	}
-
-	@Test
 	public void testPauseResumeWorkflow() {
-		_game.setLevel(Optional.of(2));
+		_game.setLevel(2);
 		_game.pause();
 		assertEquals(2, _game.getCurrentLevel());
 		assertTrue(_game.isPaused());
