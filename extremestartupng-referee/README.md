@@ -121,13 +121,12 @@ Once the new candidate has been registered, the **extremestartupng-referee** sta
 
 #### Input
 
-* **Method** : GET
-* **Path** : addPlayer
+* **Method** : POST
+* **Path** : player
 * **QueryParams**
   * **_nick_** : (required) Nickname of the candidate
   * **_host_** : (required) Host of the candidate's **extremestartupng-candidate**
   * **_port_** : (required) Port of the candidate's **extremestartupng-candidate**
-* **Sample** : `http://192.168.0.1:8080/addPlayer?nick=john&host=192.168.0.2&port=8081`
 
 #### Output
 
@@ -146,7 +145,29 @@ This service returns every registered candidates.
 
 * **Method** : GET
 * **Path** : players
-* **Sample** : `http://192.168.0.1:8080/players`
+
+#### Output
+
+```json
+[ 
+  {
+    "_nick" : "john",
+    "_uri" : "http://192.168.0.2:8081",
+    "_score" : 120
+  }
+]
+```
+
+### Unregistered a player
+
+This service unregisters a candidate.
+
+#### Input
+
+* **Method** : DELETE
+* **Path** : player/{nick}
+* **PathParams**
+  * **_nick_** : Candidate's nickname
 
 #### Output
 
@@ -166,13 +187,34 @@ This service changes the current level.
 
 #### Input
 
-* **Method** : GET
-* **Path** : changeLevel
-* **QueryParams**
-  * **_level_** : New level (if unspecified, the current level will be increased)
-* **Samples** :
-  * `http://192.168.0.1:8080/changeLevel` : if the current level is 3, the new one will be 4
-  * `http://192.168.0.1:8080/changeLevel?level=5` : change level to level 5 
+* **Method** : POST
+* **Path** : level/{lvl}
+* **PathParams**
+  * **_lvl_** : New level
+
+#### Output
+
+```json
+{
+  "_currentLevel" : 5,
+  "_players" : [
+    {
+      "_nick" : "john",
+      "_uri" : "http://192.168.0.2:8081",
+      "_score" : 150
+    }
+  ]
+}
+```
+
+### Increasing level
+
+This service increases the current level.
+
+#### Input
+
+* **Method** : POST
+* **Path** : level
 
 #### Output
 
@@ -195,9 +237,8 @@ This service starts or resumes the game (if it has been paused).
 
 #### Input
 
-* **Method** : GET
+* **Method** : POST
 * **Path** : pause
-* **Sample** : `http://192.168.0.1:8080/pause`
 
 #### Output
 
@@ -214,16 +255,14 @@ This service starts or resumes the game (if it has been paused).
 }
 ```
 
-
 ### Pause game
 
 This service pauses the game : a sample question will be asked.
 
 #### Input
 
-* **Method** : GET
+* **Method** : POST
 * **Path** : pause
-* **Sample** : `http://192.168.0.1:8080/pause`
 
 #### Output
 
