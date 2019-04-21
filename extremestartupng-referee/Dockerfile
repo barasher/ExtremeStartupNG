@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM anapsix/alpine-java
 VOLUME /tmp
 COPY target/esng-referee.tar.gz /root/
 WORKDIR /root
